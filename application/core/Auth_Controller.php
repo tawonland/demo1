@@ -24,7 +24,7 @@ class Auth_Controller extends MY_Controller
 		//set table
 		$this->load->library('table');
 
-		$tmpl = array ( 'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="table table-bordered table-striped">' );
+		$tmpl = array ( 'table_open'  => '<table border="1" cellpadding="2" cellspacing="1" class="table table-bordered table-striped table-hover">' );
 
 		$this->table->set_template($tmpl);
 	}
@@ -44,7 +44,7 @@ class Auth_Controller extends MY_Controller
 	function listdata()
 	{
 
-		$this->data['content_view'] = 'inc_table_generate';
+		$this->data['content_view'] = 'inc_list_v';
 
 		$this->data['description'] = 'Data ' . $this->ctl;
 
@@ -99,12 +99,16 @@ class Auth_Controller extends MY_Controller
 	function add()
 	{
 		$this->data['content_view'] = 'inc_data_v';
-		$this->data['buttons']['back'] 	= $this->buttons->back($this->ctl);
-		$this->data['buttons']['add'] 	= $this->buttons->add($this->ctl);
-		$this->data['buttons']['save'] 	= $this->buttons->save($this->ctl);
+		$this->data['form_data'] 	= ucfirst($this->ctl).'/'.$this->ctl.'_v';
+		$this->data['description'] 	= 'Form ';
 
-		$this->data['description'] = 'Form ';
+		$row = $this->session->flashdata('row');
 
+
+		if($row){
+			$this->data['row'] = $row;
+		}
+		
 		$this->template->admin_template($this->data);
 	}
 

@@ -1,50 +1,46 @@
+<?php
+$err_msg = $this->session->flashdata('error');
+
+if(isset($err_msg)){
+	echo '<div class="row">';
+		echo '<div class="col-md-12">';
+	    	echo '<div class="alert alert-danger">'.$err_msg.'</div>';
+	    echo '</div>';
+    echo '</div>';
+}
+
+// if(isset($row)){
+// 	echo '<pre>';
+// 	print_r($row);
+// }
+
+?>
 <div class="row">
 	<div class="col-md-12">
-		<ul class="list-inline pull-right">
-		<?php
 		
-		  ?>
-		    <li>
-		    	<a class="btn btn-success" data-type="save"><i class="fa fa-save"></i> Simpan</a>
-		    </li>
-		  <?php
-		
-		?>
-		</ul>
-	</div>
-</div>
-
-
-<div class="col-md-12">
-	<div class="row">
-
-    <div class="col-md-12">
-			<div class="form-group">
-				<?php echo form_open_multipart($ctl.'/save', array('id' => 'form_data')); ?>
+		<!-- Horizontal Form -->
+		<div class="box box-info">
+			<div class="box-header with-border">
+			  <h3 class="box-title"></h3>
 			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<?php echo form_open_multipart($ctl.'/save', array('id' => 'form_data', 'class' => 'form-horizontal')); ?>
+			<div class="box-body">
+				<?php
+					$this->load->view($form_data);
+				?>
+			</div>
+			<div class="box-footer">
+				<button type="reset" class="btn btn-default">Reset</button>
+				<button type="submit" class="btn btn-info pull-right">Simpan</button>
+			</div>
+			<!-- /.box-footer -->
+
+			  <!-- /.box-footer -->
+			<?php echo form_close(); ?>
 		</div>
-
-    <div class="col-md-12">
-			<div class="form-group">
-				<?php echo form_input(['name' => 'user_firstname', 'placeholder' => 'Nama']); ?>
-				<?php echo form_error('user_firstname'); ?>
-			</div>
+		<!-- /.box -->
 	</div>
+<div class="row">
 
-    <div class="col-md-12">
-			<div class="form-group">
-        <?php echo form_close(); ?>
-			</div>
-		</div>
-
-  </div>
-</div>
-<script type="text/javascript">
-
-$(document).ready(function () {
-	$("[data-type='save']").click(function () {
-	    alert('a');
-	});
-})
-
-</script>

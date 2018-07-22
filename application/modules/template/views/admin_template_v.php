@@ -27,6 +27,8 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script src="<?php echo base_url();?>assets/js/jquery-1.7.1.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -244,21 +246,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
-                  <div class="box-header">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <h3 class="box-title pull-left"><?php echo isset($box_title) ? $box_title : '';?></h3>
-                        
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                      <?php  $this->load->view($content_view); ?>
-                  </div>
-
-          </div>
+          <?php  $this->load->view($content_view); ?>
         </div>
       </div>
 

@@ -114,7 +114,7 @@ class Login extends Front_Controller
 		$user_name = $getUserInfo['email'];
 
 		//cek apakah email sudah ada di database
-		$user = $this->M_Users->get_user($user_name);
+		$user = $this->M_Users->get_login($user_name);
 
 		if($user == false)
 		{
@@ -122,11 +122,12 @@ class Login extends Front_Controller
 			$data['google_id']			= $getUserInfo['id'];
         	$data['user_name']			= $getUserInfo['email'];
         	$data['user_email']			= $getUserInfo['email'];
+        	$data['user_emailnotif']	= $getUserInfo['email'];
         	$data['user_fullname']		= $getUserInfo['name'];
         	$data['user_gender']		= $getUserInfo['gender'];
         	$data['user_firstname']		= $getUserInfo['givenName'];
         	$data['user_lastname']		= $getUserInfo['family_name'];
-        	$data['user_password']  	= password_hash('admin', PASSWORD_BCRYPT);
+        	$data['user_password']  	= password_hash('hmvcci318', PASSWORD_BCRYPT);
 
         	$id = $this->M_Users->signup($data);
 
@@ -138,7 +139,7 @@ class Login extends Front_Controller
 	        }
 
 
-	        $user = $this->M_Users->get_user($user_name);
+	        $user = $this->M_Users->get_login($user_name);
 	        
 			// $this->session->set_flashdata('error', 'Maaf, email anda belum terdaftar');
    			// return redirect('login');

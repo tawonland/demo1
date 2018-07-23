@@ -119,6 +119,7 @@ class Auth_Controller extends MY_Controller
 	function add()
 	{
 		$this->data['content_view'] = 'inc_data_v';
+		$this->data['form_action'] 	= $this->ctl.'/insert';
 		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
 		$this->data['description'] 	= 'Form ';
 
@@ -135,11 +136,13 @@ class Auth_Controller extends MY_Controller
 	function edit($id)
 	{
 		
+		$id 	= $this->uri->segment(3);
+
 		$this->data['content_view'] = 'inc_data_v';
+		$this->data['form_action'] 	= $this->ctl.'/update/'.$id;
 		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
 		$this->data['description'] 	= 'Form ';
 
-		$id 	= $this->uri->segment(3);
 		$row 	= $this->{$this->model}->getRowById($id);
 
 		$this->data['row'] = $row;
@@ -147,7 +150,14 @@ class Auth_Controller extends MY_Controller
 		$this->template->admin_template($this->data);
 	}
 
-	function save()
+	function insert()
+	{
+		echo '<pre>';
+		print_r($_REQUEST);
+	}
+
+
+	function update($id)
 	{
 		echo '<pre>';
 		print_r($_REQUEST);

@@ -25,7 +25,7 @@ if(isset($err_msg)){
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->
-			<?php echo form_open_multipart($ctl.'/save', array('id' => 'form_data', 'class' => 'form-horizontal')); ?>
+			<?php echo form_open_multipart($form_action, array('id' => 'form_data', 'class' => 'form-horizontal')); ?>
 			<div class="box-body">
 				<?php
 					$this->load->view($form_data);

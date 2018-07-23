@@ -85,4 +85,12 @@ class MY_Model extends CI_Model
 		return $array;
 	}
 
+    function update($data, $id)
+    {
+        $where = array(static::getKey() => $id);
+
+        $ok = $this->db->update(static::getTable(), $data, $where);
+        
+    }
+
 }

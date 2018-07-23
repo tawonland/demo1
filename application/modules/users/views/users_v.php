@@ -1,9 +1,15 @@
+<?
+echo '<pre>';
+print_r($row);
+echo '</pre>';
+?>
+
 <div class="form-group">
   <label for="user_firstname" class="col-sm-2 control-label">Nama</label>
 
   <div class="col-sm-10">
-  	<?php echo form_input(['name' => 'user_firstname', 'class' => 'form-control required', 'placeholder' => 'Nama'], isset($row['user_firstname']) ? $row['user_firstname'] : ''); ?>
-	<?php echo form_error('user_firstname'); ?>
+  	<?php echo form_input(['name' => 'user_fullname', 'class' => 'form-control required', 'placeholder' => 'Nama Lengkap'], isset($row['user_fullname']) ? $row['user_firstname'] : ''); ?>
+	<?php echo form_error('user_fulltname'); ?>
   </div>
 </div>
 

@@ -51,7 +51,7 @@ class Login extends Front_Controller
 
         //echo password_hash('admin', PASSWORD_BCRYPT); die();
 
-       	$user = $this->M_Users->get_user($user_name);
+       	$user = $this->M_Users->get_login($user_name);
        	
        	if(!$user){
        		$this->session->set_flashdata('error', 'Username atau password salah');
@@ -71,7 +71,7 @@ class Login extends Front_Controller
 
         $session_user['loged_in'] 		= TRUE;
         $session_user['user_id'] 		= $user->user_id;
-        $session_user['ip_address'] 	= $user->ip_address;
+        $session_user['ip_address'] 	= $ip_address;
         
         $session_user['user_name'] 		= $user->user_name;
         $session_user['user_email'] 	= $user->user_email;
@@ -121,6 +121,7 @@ class Login extends Front_Controller
 			
 			$data['google_id']			= $getUserInfo['id'];
         	$data['user_name']			= $getUserInfo['email'];
+        	$data['user_email']			= $getUserInfo['email'];
         	$data['user_fullname']		= $getUserInfo['name'];
         	$data['user_gender']		= $getUserInfo['gender'];
         	$data['user_firstname']		= $getUserInfo['givenName'];
@@ -146,7 +147,8 @@ class Login extends Front_Controller
 		
         // ambil user
         
-
+		$ip_address = $this->input->ip_address();
+		
 		//google session
 		$session_user['loginwith'] 		= 'google';
 		$session_user['access_token'] 	= $access_token;
@@ -154,7 +156,7 @@ class Login extends Front_Controller
 
 		$session_user['loged_in'] 		= TRUE;
 		$session_user['user_id'] 		= $user->user_id;
-
+		$session_user['ip_address'] 	= $ip_address;
 		$session_user['user_name'] 		= $user->user_name;
 		$session_user['user_email'] 	= $user->user_email;
 		$session_user['user_firstname'] = $user->user_firstname;

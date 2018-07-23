@@ -11,7 +11,7 @@
 			<div class="box-header with-border">
 				<ul class="list-inline ">
 				<?php
-				
+					
 				  ?>
 				    <li>
 				    	<a class="btn btn-success" href="<?php echo base_url().$ctl; ?>/add"><i class="fa fa-plus"></i> Tambah</a>
@@ -67,3 +67,15 @@
 		<!-- /.box -->
 	</div>
 <div class="row">
+
+<script type="text/javascript">
+	var base_url = '<?=base_url($ctl)?>';
+
+	$("[data-type='edit']").click(function () {
+        if (typeof (list) != "undefined")
+            sessionStorage.setItem(detpage + ".list", list);
+
+        location.href = base_url + "/edit/" + $(this).attr("data-id");
+    });
+
+</script>

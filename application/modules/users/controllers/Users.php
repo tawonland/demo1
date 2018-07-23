@@ -14,11 +14,11 @@ class Users extends Auth_Controller
 	function index()
 	{
 
-		$this->a_kolom[] = array('label' => 'No', 'field' => 'no:');
+		$this->a_kolom[] = array('label' => array('data' => 'No', 'align' => 'center'), 'field' => 'no:');
 		$this->a_kolom[] = array('label' => 'Nama', 'field' => 'user_firstname');
-		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_email');
+		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_name');
 		$this->a_kolom[] = array('label' => 'No HP', 'field' => 'user_mobile');
-		$this->a_kolom[] = array('label' => 'Aktif', 'field' => 'user_active');
+		$this->a_kolom[] = array('label' => array('data' => 'Aktif', 'align' => 'center'), 'td_attributes' => array('align' => 'center'), 'field' => 'user_active');
 
 		parent::listdata();
 	}
@@ -92,7 +92,7 @@ class Users extends Auth_Controller
 
         unset($data['passconf'],$data['submit']);
 
-        $data['user_password']  = password_hash($data['user_password'], PASSWORD_BCRYPT);
+        $data['user_password']  = password_hash('admin', PASSWORD_BCRYPT);
         $data['user_name']		= $data['user_email'];
 
         $id = $this->M_Users->signup($data);

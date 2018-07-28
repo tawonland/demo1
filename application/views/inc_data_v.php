@@ -21,7 +21,17 @@ if(isset($err_msg)){
 		<!-- Horizontal Form -->
 		<div class="box box-info">
 			<div class="box-header with-border">
-			  <h3 class="box-title"></h3>
+			  	<ul class="list-inline ">
+				<?php
+					
+				  ?>
+				    <li>
+				    	<a class="btn btn-info" href="<?php echo base_url().$ctl; ?>"><i class="fa fa-list"></i> Kembali ke Daftar</a>
+				    </li>
+				  <?php
+				
+				?>
+				</ul>
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->

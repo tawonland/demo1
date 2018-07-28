@@ -9,6 +9,7 @@ class M_Users extends MY_Model
 	
 	const table 	= 'users';
 	const key 		= 'user_id';
+	const limit 	= 3;
 
 	function __construct()
 	{

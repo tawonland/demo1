@@ -60,12 +60,17 @@ class MY_Model extends CI_Model
     }
 
 
-	function getList(){
+	function getList($offset = NULL){
 		//$c = get_called_class();
-		$query = $this->db->get(static::getTable());
+		$query = $this->db->get(static::getTable(), static::getLimit(), $offset);
 
 		return $query->result_array();
 	}
+
+    function getLimit()
+    {
+        return static::limit;
+    }
 
 	function getRowById($id)
 	{

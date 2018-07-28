@@ -14,11 +14,11 @@ class Users extends Auth_Controller
 	function index()
 	{
 
-		$this->a_kolom[] = array('label' => 'No', 'field' => 'no:');
-		$this->a_kolom[] = array('label' => 'Nama', 'field' => 'user_firstname');
-		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_email');
+		$this->a_kolom[] = array('label' => array('data' => 'No', 'align' => 'center'), 'field' => 'no:');
+		$this->a_kolom[] = array('label' => 'Nama Lengkap', 'field' => 'user_fullname');
+		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_name');
 		$this->a_kolom[] = array('label' => 'No HP', 'field' => 'user_mobile');
-		$this->a_kolom[] = array('label' => 'Aktif', 'field' => 'user_active');
+		$this->a_kolom[] = array('label' => array('data' => 'Aktif', 'align' => 'center'), 'td_attributes' => array('align' => 'center'), 'field' => 'user_active');
 
 		parent::listdata();
 	}
@@ -55,14 +55,102 @@ class Users extends Auth_Controller
 
 	function add()
 	{
-
-		ini_set("display_errors", 1);
-		$this->a_kolom[] = array('label' => 'Nama', 'field' => 'user_firstname');
-		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_email');
-		$this->a_kolom[] = array('label' => 'No HP', 'field' => 'user_mobile');
-		$this->a_kolom[] = array('label' => 'Aktif', 'field' => 'user_active');
-
-		
 		parent::add();
 	}
+
+
+	function insert()
+	{
+
+		$this->load->library('form_validation');
+
+		$config = array(
+		        array(
+		                'field' => 'user_fullname',
+		                'label' => 'Nama Lengkap',
+		                'rules' => 'trim|required'
+		        ),
+		        array(
+		                'field' => 'user_email',
+		                'label' => 'Email',
+		                'rules' => 'trim|required|valid_email|is_unique[users.user_email]'
+		        )
+		);
+
+		$this->form_validation->set_rules($config);
+		$data = $this->input->post();
+
+		if ($this->form_validation->run() == FALSE)
+        {
+           	$this->session->set_flashdata('row', $data);
+
+           	$this->session->set_flashdata('error', validation_errors());
+            redirect($this->ctl.'/add');
+
+        }
+
+        //load model
+        $this->load->model('users/m_users');
+
+        //
+        $data['user_password']  = password_hash('admin', PASSWORD_BCRYPT);
+        $data['user_name']		= $data['user_email'];
+
+        //insert data
+       	$id = $this->M_Users->signup($data);
+        
+        if(!$id)
+        {
+        	$this->session->set_flashdata('error', info('not_saved'));
+        	redirect($this->ctl.'/add');
+        }
+
+       	$this->session->set_flashdata('success', info('not_saved'));
+       	redirect($this->ctl);
+	}
+
+	function update($id)
+	{
+
+		$this->load->library('form_validation');
+
+		$config = array(
+		        array(
+		                'field' => 'user_fullname',
+		                'label' => 'Nama Lengkap',
+		                'rules' => 'trim|required'
+		        )
+		);
+
+		$this->form_validation->set_rules($config);
+		$data = $this->input->post();
+
+		if ($this->form_validation->run() == FALSE)
+        {
+           	$this->session->set_flashdata('row', $data);
+
+           	$this->session->set_flashdata('error', validation_errors());
+            redirect($this->ctl.'/edit');
+
+        }
+
+        //load model
+        $this->load->model('users/m_users');
+
+        //
+        $data['user_name']		= $data['user_email'];
+
+        //insert data
+       	$id = $this->M_Users->update($data, $id);
+        
+        if(!$id)
+        {
+        	$this->session->set_flashdata('error', info('not_saved'));
+        	redirect($this->ctl.'/detail/'.$id);
+        }
+
+       	$this->session->set_flashdata('success', info('not_saved'));
+       	redirect($this->ctl);
+	}
+
 }

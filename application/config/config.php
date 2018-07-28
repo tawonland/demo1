@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['site_path'] = 'hmvcci318/';
+$config['site_path'] = 'demo1/';
 
 $config['base_url'] = 'http://localhost/'.$config['site_path'];
 

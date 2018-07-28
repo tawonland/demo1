@@ -27,6 +27,8 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script src="<?php echo base_url();?>assets/js/jquery-1.7.1.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -233,6 +235,7 @@
         <?php echo $page_header; ?>
         <small><?php echo $description; ?></small>
       </h1>
+      Download this source code at <a href="https://github.com/tawonland/demo1" target="_blank">https://github.com/tawonland/demo1</a>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard"></i> Admin</a></li>
         <li><a href="<?php echo base_url().$ctl; ?>"><?php echo ucfirst($ctl); ?></a></li>
@@ -244,21 +247,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
-                  <div class="box-header">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <h3 class="box-title pull-left"><?php echo isset($box_title) ? $box_title : '';?></h3>
-                        
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                      <?php  $this->load->view($content_view); ?>
-                  </div>
-
-          </div>
+          <?php  $this->load->view($content_view); ?>
         </div>
       </div>
 

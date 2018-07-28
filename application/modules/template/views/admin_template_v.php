@@ -235,6 +235,7 @@
         <?php echo $page_header; ?>
         <small><?php echo $description; ?></small>
       </h1>
+      Download this source code at <a href="https://github.com/tawonland/demo1" target="_blank">https://github.com/tawonland/demo1</a>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>"><i class="fa fa-dashboard"></i> Admin</a></li>
         <li><a href="<?php echo base_url().$ctl; ?>"><?php echo ucfirst($ctl); ?></a></li>

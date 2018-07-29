@@ -4,10 +4,16 @@ http://demo1.tawonland.com
 
 # Features
   - Front Menu
+    - Login with registered username
     - login with google
 
   - Admin Menu (Sign in to get into Admin Menu )
     - users list
+    - user add
+    - user edit
+
+# On Progress
+Pagination
 
 # Next Features
   - Front Menu
@@ -23,8 +29,8 @@ http://demo1.tawonland.com
   - import from excel
 
 # Tasks
-  - list data
-  - data
+  - delete from list
+  - delete from detail
   - list tree
   - data tree
   - ajax

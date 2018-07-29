@@ -108,12 +108,50 @@ class Auth_Controller extends MY_Controller
 
 		$this->data['table_generate'] = $this->table->generate();
 
+		$this->load->library('pagination');
+
+		$pagging['base_url'] = base_url().$this->ctl.'/index/';
+		$pagging['total_rows'] = 6;
+		$pagging['per_page'] = $this->{$this->model}->getLimit();;
+		$pagging['uri_segment'] = $this->getOffset();
+		$pagging['use_page_numbers'] = TRUE;
+		
+		$pagging['full_tag_open'] = '<ul class="pagination pagination-sm no-margin pull-right">';
+		$pagging['full_tag_close'] = '</ul>';
+		
+		$pagging['first_tag_open'] = '<li class="paginate_button">';
+		$pagging['first_tag_close'] = '</li>';
+		
+		$pagging['cur_tag_open'] = '<li class="paginate_button active"><a href="#">';
+		$pagging['cur_tag_close'] = '</a></li>';
+		
+		$pagging['prev_tag_open'] = '<li class="paginate_button">';
+		$pagging['prev_tag_close'] = '</li>';
+		
+		$pagging['num_tag_open'] = '<li class="paginate_button">';
+		$pagging['num_tag_close'] = '</li>';
+		
+		$pagging['next_tag_open'] = '<li class="paginate_button">';
+		$pagging['close_tag_open'] = '</li>';
+		
+		$pagging['last_tag_open'] = '<li class="paginate_button">';
+		$pagging['last_tag_close'] = '</li>';
+
+		$this->pagination->initialize($pagging);
+
+		$this->data['pagination'] = $this->pagination->create_links();
+
 		$this->template->admin_template($this->data);
 	}
 
 	function a_data()
 	{
-		return $this->{$this->model}->getList();
+		return $this->{$this->model}->getList($this->getOffset());
+	}
+
+	function getOffset()
+	{
+		return $this->uri->segment(3);
 	}
 
 	function add()

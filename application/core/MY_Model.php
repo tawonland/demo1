@@ -85,12 +85,41 @@ class MY_Model extends CI_Model
 		return $array;
 	}
 
-    function update($data, $id)
+    function insert($data, $insert_id == false)
+    {
+        $this->db->insert(static::getTable(), $data);
+
+        if($insert_id)
+        {
+            return $this->db->insert_id();
+        }
+
+        
+    }
+
+    function update($data, $id, $return = false)
     {
         $where = array(static::getKey() => $id);
 
         $ok = $this->db->update(static::getTable(), $data, $where);
         
+        if(!$ok)
+        {
+            $error = $this->db->error();
+        }
+
+        if($return)
+        {
+            return true;
+        }
+
+        list($dash, $ctl) = explode("_",strtolower(get_class($this)));
+
+        $this->session->set_flashdata('success', info('not_saved'));
+        redirect($ctl.'/detail/'.$id);
+        
     }
+
+
 
 }

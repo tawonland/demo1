@@ -130,7 +130,7 @@ class Users extends Auth_Controller
            	$this->session->set_flashdata('row', $data);
 
            	$this->session->set_flashdata('error', validation_errors());
-            redirect($this->ctl.'/edit');
+            redirect($this->ctl.'/edit/'.$id);
 
         }
 
@@ -140,17 +140,8 @@ class Users extends Auth_Controller
         //
         $data['user_name']		= $data['user_email'];
 
-        //insert data
-       	$id = $this->M_Users->update($data, $id);
-        
-        if(!$id)
-        {
-        	$this->session->set_flashdata('error', info('not_saved'));
-        	redirect($this->ctl.'/detail/'.$id);
-        }
-
-       	$this->session->set_flashdata('success', info('not_saved'));
-       	redirect($this->ctl);
+       	$this->M_Users->update($data, $id);
+       
 	}
 
 }

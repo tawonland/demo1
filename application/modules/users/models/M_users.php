@@ -15,13 +15,6 @@ class M_Users extends MY_Model
 		parent::__construct();
 	}
 
-	function signup($data)
-	{
-		$this->db->insert(static::getTable(), $data);
-
-		return $this->db->insert_id();
-	}
-
 	function get_login($user_name)
 	{
 		$where = array('user_name' => $user_name, 'user_email' => $user_name);

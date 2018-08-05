@@ -90,7 +90,7 @@ class MY_Model extends CI_Model
 		return $array;
 	}
 
-    function insert($data, $insert_id == false)
+    function insert($data, $insert_id = false)
     {
         $this->db->insert(static::getTable(), $data);
 

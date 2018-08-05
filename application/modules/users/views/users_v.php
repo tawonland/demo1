@@ -8,7 +8,7 @@
   <label for="user_fullname" class="col-sm-2 control-label">Nama Lengkap</label>
 
   <div class="col-sm-10">
-  	<?php echo form_input(['name' => 'user_fullname', 'class' => 'form-control required', 'placeholder' => 'Nama Lengkap'], isset($row['user_fullname']) ? $row['user_fullname'] : ''); ?>
+  <?php echo formx_input(['name' => 'user_fullname', 'class' => 'form-control required', 'placeholder' => 'Nama Lengkap'], isset($row['user_fullname']) ? $row['user_fullname'] : ''); ?>
 	<?php echo form_error('user_fulltname'); ?>
   </div>
 </div>

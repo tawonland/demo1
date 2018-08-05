@@ -1,4 +1,5 @@
 <?php
+
 $err_msg = $this->session->flashdata('error');
 
 if(isset($err_msg)){

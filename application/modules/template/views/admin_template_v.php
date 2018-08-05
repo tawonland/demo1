@@ -460,7 +460,17 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+<?
+  
+if(ENVIRONMENT == 'development'){
+  $enable_profiler = $this->output->enable_profiler(TRUE);
 
+  $array = json_decode(json_encode($enable_profiler), True);
+
+  unset($final_output);
+}
+
+?>
 <!-- jQuery 3 -->
 <script src="<?php echo base_url();?>assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

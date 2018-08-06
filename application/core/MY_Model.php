@@ -90,16 +90,18 @@ class MY_Model extends CI_Model
 		return $array;
 	}
 
-    function insert($data, $insert_id == false)
+    function insert($data, $insert_id = false)
     {
-        $this->db->insert(static::getTable(), $data);
+        $insert = $this->db->insert(static::getTable(), $data);
 
         if($insert_id)
         {
             return $this->db->insert_id();
         }
-
-        
+        else
+        {
+            return $insert;
+        }        
     }
 
     function update($data, $id, $return = false)
@@ -122,6 +124,24 @@ class MY_Model extends CI_Model
 
         $this->session->set_flashdata('success', info('not_saved'));
         redirect($ctl.'/detail/'.$id);
+        
+    }
+
+     function delete($id, $return = false)
+    {
+        $where = array(static::getKey() => $id);
+
+        $ok = $this->db->delete(static::getTable(), $where);
+        
+        if(!$ok)
+        {
+            $error = $this->db->error();
+            return array(false, $error);
+    
+        }
+
+        return true;
+   
         
     }
 

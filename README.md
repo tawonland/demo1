@@ -11,9 +11,11 @@ http://demo1.tawonland.com
     - users list
     - user add
     - user edit
+    - user delete from list
 
 # On Progress
-Pagination
+  - Pagination
+  - detail page
 
 # Next Features
   - Front Menu
@@ -29,7 +31,6 @@ Pagination
   - import from excel
 
 # Tasks
-  - delete from list
   - delete from detail
   - list tree
   - data tree

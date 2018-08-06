@@ -36,6 +36,11 @@
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->
+			<?php 
+				echo form_open('', array('id' => 'form_list')); 
+				echo formx_hidden(['id' => 'key', 'name' => 'key']);
+			?>
+
 			<div class="box-body table-responsive no-padding">
 				<?php
 
@@ -49,11 +54,22 @@
 				    echo '</div>';
 				}
 
+				$err = $this->session->flashdata('danger');
+
+				if(isset($err)){
+					echo '<div class="row">';
+						echo '<div class="col-md-12">';
+					    	echo '<div class="alert alert-danger">'.$err.'</div>';
+					    echo '</div>';
+				    echo '</div>';
+				}
+
 				echo $table_generate;
 
 				?>
 			</div>
 			<!-- /.box-body -->
+			<?php echo form_close(); ?>
 
 			<div class="box-footer clearfix">
               	<?php
@@ -71,13 +87,39 @@
 <div class="row">
 
 <script type="text/javascript">
-	var base_url = '<?=base_url($ctl)?>';
 
-	$("[data-type='edit']").click(function () {
-        if (typeof (list) != "undefined")
-            sessionStorage.setItem(detpage + ".list", list);
+var formlist;
+var base_url = '<?=base_url($ctl)?>';
 
-        location.href = base_url + "/edit/" + $(this).attr("data-id");
+$(document).ready(function () {
+    formlist = $("#form_list");
+
+});
+
+$("[data-type='detail']").click(function () {
+    if (typeof (list) != "undefined")
+        sessionStorage.setItem(detpage + ".list", list);
+
+    location.href = base_url + "/detail/" + $(this).attr("data-id");
+});
+
+$("[data-type='edit']").click(function () {
+    if (typeof (list) != "undefined")
+        sessionStorage.setItem(detpage + ".list", list);
+
+    location.href = base_url + "/edit/" + $(this).attr("data-id");
+});
+
+$("[data-type='delete']").click(function () {
+    id = $(this).attr("data-id");
+    thisdata = this;
+    bootbox.confirm("Apakah anda yakin akan menghapus data ini?", function (result) {
+        if (result) {
+            formlist.find("#key").val(id);
+            formlist.attr("action", base_url + "/delete");
+	        goSubmit(thisdata, "delete");
+        }
     });
+});
 
 </script>

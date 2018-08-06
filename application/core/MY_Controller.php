@@ -23,4 +23,6 @@ class MY_Controller extends MX_Controller
 		$this->model = 'M_'.ucfirst($this->ctl);
 		$this->load->model(ucfirst($this->ctl).'/'.$this->model);
 	}
+
+	
 }

@@ -247,7 +247,10 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <?php  $this->load->view($content_view); ?>
+          <?php  
+            print_r($_REQUEST);
+            $this->load->view($content_view); 
+          ?>
         </div>
       </div>
 
@@ -483,10 +486,45 @@ if(ENVIRONMENT == 'development'){
 <script src="<?php echo base_url();?>assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script>
-<script>
+<script src="<?php echo base_url();?>assets/js/bootbox.min.js"></script>
+<script type="text/javascript">
+  var btnclick;
+
   $(document).ready(function () {
-    $('.sidebar-menu').tree()
+    $('.sidebar-menu').tree();
   })
+
+
+function goSubmit(elem, act) {
+    // simpan nilai scroll dulu
+    localStorage.setItem("scroll", $(window).scrollTop());
+
+    elem = $(elem); // diperlukan di bawah
+    var form = getForm(elem);
+
+    if (act)
+        form.find("#act").val(act);
+
+    // cek format laporan
+    if ($("#format").length == 0 || $("#format").val() == "html") {
+        if (elem.is("button") && !elem.is("[data-active]"))
+            elem.prop("disabled", true);
+        else if (btnclick && !btnclick.is("[data-active]"))
+            btnclick.prop("disabled", true);
+    }
+
+    form.submit();
+}
+
+function getForm(elem) {
+    elem = $(elem);
+
+    if (elem.is("form"))
+        return elem;
+    else
+        return elem.parents("form").eq(0);
+}
+
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 class Auth_Controller extends MY_Controller
 {
 	public $c_edit = true;
+	public $c_update = false;
 	public $c_delete = true;
 	public $a_kolom = array();
 
@@ -19,6 +20,8 @@ class Auth_Controller extends MY_Controller
 		$this->data['description'] = 'Halaman ' . $this->ctl;
 
 		$this->data['c_edit'] = $this->c_edit;
+		$this->data['c_update'] = $this->c_edit;
+		$this->data['c_delete'] = $this->c_delete;
 
 		$this->data['buttons'] = array();
 
@@ -77,6 +80,10 @@ class Auth_Controller extends MY_Controller
 			}
 
 			$aksi = '';
+
+			$aksi .= '<button type="button" class="btn btn-info btn-xs btn-flat" data-id="'.$id.'" data-type="detail" data-toggle="tooltip" title="Lihat Detail">
+			<i class="fa fa-eye"></i></button> ';
+			
 
 			if($this->c_edit){
 				$aksi .= '<button type="button" class="btn btn-warning btn-xs btn-flat" data-id="'.$id.'" data-type="edit" data-toggle="tooltip" title="Edit">
@@ -174,16 +181,18 @@ class Auth_Controller extends MY_Controller
 	function detail($id)
 	{
 
+		$this->data['c_edit'] = false;
+
 		$id 	= $this->uri->segment(3);
-
-		$this->data['content_view'] = 'inc_data_v';
-		$this->data['form_action'] 	= $this->ctl.'/update/'.$id;
-		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
-		$this->data['description'] 	= 'Form ';
-
 		$row 	= $this->{$this->model}->getRowById($id);
 
+		$this->data['content_view'] = 'inc_detail_v';
+		$this->data['form_action'] 	= '';
+		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
+		$this->data['description'] 	= 'Form ';
+		$this->data['id']  = $id;
 		$this->data['row'] = $row;
+
 
 		$this->template->admin_template($this->data);
 	}
@@ -191,6 +200,12 @@ class Auth_Controller extends MY_Controller
 	function edit($id)
 	{
 		
+		if($this->c_edit !== true)
+		{
+
+			die(info('has_no_access'));
+		}
+
 		$id 	= $this->uri->segment(3);
 
 		$this->data['content_view'] = 'inc_data_v';
@@ -211,11 +226,31 @@ class Auth_Controller extends MY_Controller
 		print_r($_REQUEST);
 	}
 
-
 	function update($id)
 	{
-		// echo '<pre>';
-		// print_r($_REQUEST);
+		
+		
+	}
+
+	function delete()
+	{
+		
+		if($this->c_delete !== true)
+		{
+			die(info('has_no_access'));
+		}
+
+		$id = $this->input->post('key');
+
+		list($ok, $msg) = $this->{$this->model}->delete($id);
+
+		if(!$ok)
+        {
+            $this->session->set_flashdata('danger', $msg);
+        }
+
+       	$this->session->set_flashdata('success', info('deleted'));
+       	redirect($this->ctl);
 		
 	}
 

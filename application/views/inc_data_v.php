@@ -10,11 +10,6 @@ if(isset($err_msg)){
     echo '</div>';
 }
 
-// if(isset($row)){
-// 	echo '<pre>';
-// 	print_r($row);
-// }
-
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -22,16 +17,10 @@ if(isset($err_msg)){
 		<!-- Horizontal Form -->
 		<div class="box box-info">
 			<div class="box-header with-border">
-			  	<ul class="list-inline ">
-				<?php
-					
-				  ?>
+			  	<ul class="list-inline text-center">
 				    <li>
 				    	<a class="btn btn-info" href="<?php echo base_url().$ctl; ?>"><i class="fa fa-list"></i> Kembali ke Daftar</a>
 				    </li>
-				  <?php
-				
-				?>
 				</ul>
 			</div>
 			<!-- /.box-header -->
@@ -43,8 +32,16 @@ if(isset($err_msg)){
 				?>
 			</div>
 			<div class="box-footer">
+				<?php
+				if($c_edit)
+				{
+				?>
 				<button type="reset" class="btn btn-default">Reset</button>
 				<button type="submit" class="btn btn-info pull-right">Simpan</button>
+				<?php
+				}
+				?>
+
 			</div>
 			<!-- /.box-footer -->
 
@@ -54,4 +51,3 @@ if(isset($err_msg)){
 		<!-- /.box -->
 	</div>
 <div class="row">
-

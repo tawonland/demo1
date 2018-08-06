@@ -95,9 +95,10 @@ class Users extends Auth_Controller
         //
         $data['user_password']  = password_hash('admin', PASSWORD_BCRYPT);
         $data['user_name']		= $data['user_email'];
+        $data['user_fullname']		= $data['user_fullname'];
 
         //insert data
-       	$id = $this->M_Users->signup($data);
+       	$id = $this->M_Users->insert($data);
         
         if(!$id)
         {
@@ -105,7 +106,7 @@ class Users extends Auth_Controller
         	redirect($this->ctl.'/add');
         }
 
-       	$this->session->set_flashdata('success', info('not_saved'));
+       	$this->session->set_flashdata('success', info('saved'));
        	redirect($this->ctl);
 	}
 

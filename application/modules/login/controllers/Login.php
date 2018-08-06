@@ -129,7 +129,7 @@ class Login extends Front_Controller
         	$data['user_lastname']		= $getUserInfo['family_name'];
         	$data['user_password']  	= password_hash('hmvcci318', PASSWORD_BCRYPT);
 
-        	$id = $this->M_Users->signup($data);
+        	$id = $this->M_Users->insert($data);
 
 
         	if(!$id)

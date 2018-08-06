@@ -30,10 +30,20 @@ http://demo1.tawonland.com
   - Multi language
   - import from excel
 
+  - REST API
+  - SOAP
+
+  - Cron
+
 # Tasks
   - delete from detail
   - list tree
   - data tree
   - ajax
 
+# Installation
+  - export file dbhmvcci318.sql to database mysql
+  - rename file demo1/applications/config/database - Copy.php to demo1/applications/config/database.php 
+
+# README Reference
 https://dillinger.io/

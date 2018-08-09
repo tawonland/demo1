@@ -26,6 +26,8 @@ http://demo1.tawonland.com
     - users data
     - roles
     - user role
+    - live notification with pusher
+    - show online users
 
   - Multi language
   - import from excel

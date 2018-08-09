@@ -26,15 +26,13 @@ http://demo1.tawonland.com
     - users data
     - roles
     - user role
-    - live notification with pusher
-    - show online users
-
+    
+  - live notification with pusher
+  - REST API
   - Multi language
   - import from excel
-
-  - REST API
   - SOAP
-
+  - show online users
   - Cron
 
 # Tasks

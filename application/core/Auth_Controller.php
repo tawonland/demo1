@@ -103,11 +103,13 @@ class Auth_Controller extends MY_Controller
 		}
 
 		$th = array();
-		foreach ($this->a_kolom as $k => $v) {
+		foreach ($this->a_kolom as $k => $v) 
+		{
 			$th[] = $v['label'];
 		}
 
-		if($this->c_edit){
+		if($this->c_edit)
+		{
 			$th[] = array('data' => 'Aksi', 'align' => 'center');
 		}
 
@@ -119,9 +121,12 @@ class Auth_Controller extends MY_Controller
 
 		$pagging['base_url'] = base_url().$this->ctl.'/index/';
 		$pagging['total_rows'] = 6;
-		$pagging['per_page'] = $this->{$this->model}->getLimit();;
+		$pagging['per_page'] = $this->{$this->model}->getLimit();
 		$pagging['uri_segment'] = $this->getOffset();
 		$pagging['use_page_numbers'] = TRUE;
+		$pagging['cur_page'] = $this->getOffset();
+		// echo $pagging['uri_segment'];
+		// die();
 		
 		$pagging['full_tag_open'] = '<ul class="pagination pagination-sm no-margin pull-right">';
 		$pagging['full_tag_close'] = '</ul>';
@@ -252,6 +257,18 @@ class Auth_Controller extends MY_Controller
        	$this->session->set_flashdata('success', info('deleted'));
        	redirect($this->ctl);
 		
+	}
+
+	function search()
+	{
+		// get search string
+        $search = ($this->input->post("search"))? $this->input->post("search") : "NIL";
+
+        $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
+
+        echo $search;
+        die();
+
 	}
 
 }

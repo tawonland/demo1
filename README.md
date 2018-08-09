@@ -8,14 +8,7 @@ http://demo1.tawonland.com
     - login with google
 
   - Admin Menu (Sign in to get into Admin Menu )
-    - users list
-    - user add
-    - user edit
-    - user delete from list
-
-# On Progress
-  - Pagination
-  - detail page
+    - users
 
 # Next Features
   - Front Menu
@@ -34,12 +27,6 @@ http://demo1.tawonland.com
   - SOAP
   - show online users
   - Cron
-
-# Tasks
-  - delete from detail
-  - list tree
-  - data tree
-  - ajax
 
 # Installation
   - export file dbhmvcci318.sql to database mysql

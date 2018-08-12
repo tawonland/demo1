@@ -10,15 +10,13 @@ if(isset($err_msg)){
     echo '</div>';
 }
 
-// if(isset($row)){
-// 	echo '<pre>';
-// 	print_r($row);
-// }
+// var_dump($c_update);
+
+// die();
 
 ?>
 <div class="row">
 	<div class="col-md-12">
-		
 		<!-- Horizontal Form -->
 		<div class="box box-info">
 			<div class="box-header with-border">
@@ -33,7 +31,7 @@ if(isset($err_msg)){
 					    <li>
 					    	<a class="btn btn-warning" href="<?php echo base_url().$ctl.'/edit/'.$id; ?>"><i class="fa fa-pencil"></i> Edit</a>
 					    </li>
-					    <?
+					    <?php
 					    }
 					    if($c_delete)
 						{
@@ -42,7 +40,7 @@ if(isset($err_msg)){
 					    	<button type="button" class="btn btn-danger" data-type="delete">
 							<i class="fa fa-trash"></i> Hapus</button>
 					    </li>
-					    <?
+					    <?php
 					    }
 				    ?>
 				</ul>
@@ -66,7 +64,7 @@ if(isset($err_msg)){
 		</div>
 		<!-- /.box -->
 	</div>
-<div class="row">
+</div>
 
 <script type="text/javascript">
 	var formdata;

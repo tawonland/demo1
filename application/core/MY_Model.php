@@ -90,6 +90,33 @@ class MY_Model extends CI_Model
 		return $array;
 	}
 
+    function getCount()
+    {
+        return $this->db->count_all_results(static::getTable());
+    }
+
+    function getCountSearch($search)
+    {
+        
+        $this->db->select('*');
+        $this->db->from(static::getTable());
+        
+        if (!empty($search)) {
+            $this->db->like('user_fullname', $search);
+        }
+
+        $this->db->order_by('user_fullname','asc');
+
+        $getData = $this->db->get('', $perPage, $uri);
+
+        if ($getData->num_rows() > 0)
+            return $getData->result_array();
+        else
+            return null;
+        
+
+    }
+
     function insert($data, $insert_id = false)
     {
         $insert = $this->db->insert(static::getTable(), $data);

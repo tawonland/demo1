@@ -80,6 +80,17 @@ class MY_Model extends CI_Model
         return $query;
     }
 
+   function get_where_like($string, $offset = NULL){
+        //$c = get_called_class();
+        $this->db->like('user_fullname', $string);
+        $query = $this->db->get(static::getTable(), static::getLimit(), $offset);
+
+        // echo $this->db->last_query();
+        // die();
+
+        return $query;
+    }
+
     function getLimit()
     {
         return static::limit;
@@ -111,23 +122,9 @@ class MY_Model extends CI_Model
     function getCountSearch($search)
     {
         
-        $this->db->select('*');
-        $this->db->from(static::getTable());
-        
-        if (!empty($search)) {
-            $this->db->like('user_fullname', $search);
-        }
-
-        $this->db->order_by('user_fullname','asc');
-
-        $getData = $this->db->get('', $perPage, $uri);
-
-        if ($getData->num_rows() > 0)
-            return $getData->result_array();
-        else
-            return null;
-        
-
+        $this->db->like('user_fullname', $search);
+        return $this->db->count_all_results(static::getTable());
+       
     }
 
     function insert($data, $insert_id = false)

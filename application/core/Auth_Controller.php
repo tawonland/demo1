@@ -1,9 +1,12 @@
 <?php
 class Auth_Controller extends MY_Controller
 {
+	public $c_insert = true;
 	public $c_edit = true;
 	public $c_update = false;
 	public $c_delete = true;
+	
+	public $stringSearch = '';
 	public $a_kolom = array();
 
 	function __construct()
@@ -19,7 +22,8 @@ class Auth_Controller extends MY_Controller
 		$this->data['page_header'] = ucfirst($this->ctl);
 		$this->data['description'] = 'Halaman ' . $this->ctl;
 
-		$this->data['c_edit'] = $this->c_edit;
+		$this->data['c_insert'] = $this->c_insert;
+		$this->data['c_edit'] 	= $this->c_edit;
 		$this->data['c_update'] = $this->c_edit;
 		$this->data['c_delete'] = $this->c_delete;
 
@@ -50,29 +54,69 @@ class Auth_Controller extends MY_Controller
 
 		$this->data['content_view'] = 'inc_list_v';
 		$this->data['description'] = 'Data ' . $this->ctl;
-		$this->data['buttons']['add'] 	= $this->buttons->add($this->ctl);
+
+		if ($this->c_insert){
+			$this->data['buttons']['add'] 	= $this->buttons->add($this->ctl);
+		}		
 
 		$page = 'index/';
 		$total_rows = $this->{$this->model}->getCount();
 
 		$a_data = array();
+		$a_data = $this->a_data();
+
+		$this->data['table_generate'] = $this->tableGenerate($a_data);
+
+		$this->data['pagination'] = $this->getPagination($page, $total_rows);
+
+		$this->template->admin_template($this->data);
+	}
+
+	function listdatasearch()
+	{
+		$search = $this->getStringSearch();
+		$page = 'search/';
+
+		$this->data['content_view'] = 'inc_list_v';
+		$this->data['description'] = 'Data ' . $this->ctl;
+
+		if ($this->c_insert){
+			$this->data['buttons']['add'] 	= $this->buttons->add($this->ctl);
+		}		
+
+		$a_data = $this->a_data();
+		$total_rows = $this->{$this->model}->getCountSearch($search);
+
+		$this->data['table_generate'] = $this->tableGenerate($a_data);
+		$this->data['pagination'] = $this->getPagination($page, $total_rows);
+
+		$this->template->admin_template($this->data);
+	}
+
+	function getStringSearch()
+	{
+		
+    	return $this->stringSearch;
+	}
+
+	function a_data()
+	{
 		
 		if($this->method == 'search')
 		{
-			// get search string
-        	$search = ($this->input->post("search"))? $this->input->post("search") : "NIL";
-        	$search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
-
-			$page = 'search/';
-			$total_rows = $this->{$this->model}->getCountSearch($search);
 			
+			$search = $this->getStringSearch();
+			return $this->{$this->model}->get_where_like($search, $this->getOffset())->result_array();
 		}
 		else
 		{
-			$a_data = $this->a_data();
+			return $this->{$this->model}->getList($this->getOffset());
 		}
-
 		
+	}
+
+	function tableGenerate($a_data)
+	{
 		$no = 0;
 		foreach ($a_data as $key => $row) {
 			
@@ -135,54 +179,7 @@ class Auth_Controller extends MY_Controller
 
 		$this->table->set_heading($th);
 
-		$this->data['table_generate'] = $this->table->generate();
-
-
-		// Pagination
-		$this->load->library('pagination');
-
-		
-
-		$pagging['base_url'] = base_url().$this->ctl.'/'.$page;
-		$pagging['total_rows'] = $total_rows;
-		$pagging['per_page'] = $this->{$this->model}->getLimit();
-		$pagging['uri_segment'] = $this->getOffset();
-		$pagging['use_page_numbers'] = TRUE;
-		$pagging['cur_page'] = $this->getOffset();
-		// echo $pagging['uri_segment'];
-		// die();
-		
-		$pagging['full_tag_open'] = '<ul class="pagination pagination-sm no-margin pull-right">';
-		$pagging['full_tag_close'] = '</ul>';
-		
-		$pagging['first_tag_open'] = '<li class="paginate_button">';
-		$pagging['first_tag_close'] = '</li>';
-		
-		$pagging['cur_tag_open'] = '<li class="paginate_button active"><a href="#">';
-		$pagging['cur_tag_close'] = '</a></li>';
-		
-		$pagging['prev_tag_open'] = '<li class="paginate_button">';
-		$pagging['prev_tag_close'] = '</li>';
-		
-		$pagging['num_tag_open'] = '<li class="paginate_button">';
-		$pagging['num_tag_close'] = '</li>';
-		
-		$pagging['next_tag_open'] = '<li class="paginate_button">';
-		$pagging['close_tag_open'] = '</li>';
-		
-		$pagging['last_tag_open'] = '<li class="paginate_button">';
-		$pagging['last_tag_close'] = '</li>';
-
-		$this->pagination->initialize($pagging);
-
-		$this->data['pagination'] = $this->pagination->create_links();
-
-		$this->template->admin_template($this->data);
-	}
-
-	function a_data()
-	{
-		return $this->{$this->model}->getList($this->getOffset());
+		return $this->table->generate();
 	}
 
 	function getOffset()
@@ -222,9 +219,7 @@ class Auth_Controller extends MY_Controller
 		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
 		$this->data['description'] 	= 'Form ';
 		$this->data['id']  = $id;
-		$this->data['row'] = $row;
-
-		
+		$this->data['row'] = $row;	
 
 		$this->template->admin_template($this->data);
 	}
@@ -248,7 +243,7 @@ class Auth_Controller extends MY_Controller
 		$this->data['form_action'] 	= $this->ctl.'/update/'.$id;
 		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
 		$this->data['description'] 	= 'Form ';
-		$this->data['row'] 	= 
+		$this->data['row'] 	= $row;
 
 		$this->template->admin_template($this->data);
 	}
@@ -290,15 +285,61 @@ class Auth_Controller extends MY_Controller
 	function search()
 	{
 		
-
         $this->a_kolom[] = array('label' => array('data' => 'No', 'align' => 'center'), 'field' => 'no:');
 		$this->a_kolom[] = array('label' => 'Nama Lengkap', 'field' => 'user_fullname');
 		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_name');
 		$this->a_kolom[] = array('label' => 'No HP', 'field' => 'user_mobile');
 		$this->a_kolom[] = array('label' => array('data' => 'Aktif', 'align' => 'center'), 'td_attributes' => array('align' => 'center'), 'field' => 'user_active');
 
-        $this->listdata();
+		// get search string
+    	$search = ($this->input->post("table_search"))? $this->input->post("table_search") : "NIL";
+    	$search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
 
+    	$this->stringSearch = $search;
+
+        $this->listdatasearch();
+
+	}
+
+	function getPagination($page, $total_rows)
+	{
+
+		// Pagination
+		$this->load->library('pagination');
+
+		$pagging['base_url'] = base_url().$this->ctl.'/'.$page;
+		$pagging['total_rows'] = $total_rows;
+		$pagging['per_page'] = $this->{$this->model}->getLimit();
+		$pagging['uri_segment'] = $this->getOffset();
+		$pagging['use_page_numbers'] = TRUE;
+		$pagging['cur_page'] = $this->getOffset();
+		// echo $pagging['uri_segment'];
+		// die();
+		
+		$pagging['full_tag_open'] = '<ul class="pagination pagination-sm no-margin pull-right">';
+		$pagging['full_tag_close'] = '</ul>';
+		
+		$pagging['first_tag_open'] = '<li class="paginate_button">';
+		$pagging['first_tag_close'] = '</li>';
+		
+		$pagging['cur_tag_open'] = '<li class="paginate_button active"><a href="#">';
+		$pagging['cur_tag_close'] = '</a></li>';
+		
+		$pagging['prev_tag_open'] = '<li class="paginate_button">';
+		$pagging['prev_tag_close'] = '</li>';
+		
+		$pagging['num_tag_open'] = '<li class="paginate_button">';
+		$pagging['num_tag_close'] = '</li>';
+		
+		$pagging['next_tag_open'] = '<li class="paginate_button">';
+		$pagging['close_tag_open'] = '</li>';
+		
+		$pagging['last_tag_open'] = '<li class="paginate_button">';
+		$pagging['last_tag_close'] = '</li>';
+
+		$this->pagination->initialize($pagging);
+
+		return $this->pagination->create_links();
 	}
 
 }

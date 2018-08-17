@@ -610,10 +610,11 @@ class CI_Pagination {
 					if ($this->cur_page === $loop)
 					{
 						// Current page
-						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close;
+						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close;						
 					}
 					elseif ($i === $base_page)
 					{
+						
 						// First page
 						$output .= $this->num_tag_open.'<a href="'.$first_url.'"'.$attributes.$this->_attr_rel('start').'>'
 							.$loop.'</a>'.$this->num_tag_close;

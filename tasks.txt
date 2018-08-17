@@ -1,0 +1,38 @@
+# Done
+  - Front Menu
+    - Login with registered username
+    - login with google
+
+  - Admin Menu (Sign in to get into Admin Menu )
+    - users list
+    - user add
+    - user edit
+    - user delete from list
+    - detail page
+    - delete from detail
+
+  - Pagination
+
+
+# On Progress
+  - searching and pagination
+
+
+# next
+  - Admin
+    - reset password
+    - list tree
+    - data tree
+    - ajax
+    - REST API
+
+  - Front
+    - Login with facebook
+    - scroll to top
+    - 
+
+
+
+
+
+

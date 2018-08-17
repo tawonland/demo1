@@ -67,28 +67,65 @@ class MY_Model extends CI_Model
 		return $query->result_array();
 	}
 
+    function get_where($where = NULL, $limit = NULL, $offset = NULL)
+    {
+        
+        if($limit === NULL)
+        {
+            $limit = static::getLimit();
+        }
+
+        $query = $this->db->get_where(static::getTable(), $where, $limit, $offset);
+        
+        return $query;
+    }
+
+   function get_where_like($string, $offset = NULL){
+        //$c = get_called_class();
+        $this->db->like('user_fullname', $string);
+        $query = $this->db->get(static::getTable(), static::getLimit(), $offset);
+
+        // echo $this->db->last_query();
+        // die();
+
+        return $query;
+    }
+
     function getLimit()
     {
         return static::limit;
     }
 
-	function getRowById($id)
-	{
-		$query = $this->db->where([static::getKey() => $id])->get('users');
+	// function getRowById($id)
+	// {
+	// 	$query = $this->db->where([static::getKey() => $id])->get('users');
 
-		$num = $query->num_rows();
+	// 	$num = $query->num_rows();
 
-		if($num < 1)
-		{
-			return false;
-		}
+	// 	if($num < 1)
+	// 	{
+	// 		return false;
+	// 	}
 
-		$row = $query->row();
+	// 	$row = $query->row();
 
-		$array = json_decode(json_encode($row), True);
+	// 	$array = json_decode(json_encode($row), True);
 
-		return $array;
-	}
+	// 	return $array;
+	// }
+
+    function getCount()
+    {
+        return $this->db->count_all_results(static::getTable());
+    }
+
+    function getCountSearch($search)
+    {
+        
+        $this->db->like('user_fullname', $search);
+        return $this->db->count_all_results(static::getTable());
+       
+    }
 
     function insert($data, $insert_id = false)
     {

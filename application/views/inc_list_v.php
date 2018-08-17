@@ -24,6 +24,10 @@
 				</ul>
 
               <div class="box-tools">
+              	<?php
+              		echo form_open(base_url().$ctl.'/search', array('id' => 'form_search'));
+                ?>
+
                 <div class="input-group input-group-sm" style="width: 150px;">
                   <input type="text" name="table_search" class="form-control " placeholder="Search">
 
@@ -31,6 +35,12 @@
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
+
+                <?php 
+                echo form_close(); 
+                // end form 
+                ?>
+
               </div>             
 
 			</div>

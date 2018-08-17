@@ -67,28 +67,41 @@ class MY_Model extends CI_Model
 		return $query->result_array();
 	}
 
+    function get_where($where = NULL, $limit = NULL, $offset = NULL)
+    {
+        
+        if($limit === NULL)
+        {
+            $limit = static::getLimit();
+        }
+
+        $query = $this->db->get_where(static::getTable(), $where, $limit, $offset);
+        
+        return $query;
+    }
+
     function getLimit()
     {
         return static::limit;
     }
 
-	function getRowById($id)
-	{
-		$query = $this->db->where([static::getKey() => $id])->get('users');
+	// function getRowById($id)
+	// {
+	// 	$query = $this->db->where([static::getKey() => $id])->get('users');
 
-		$num = $query->num_rows();
+	// 	$num = $query->num_rows();
 
-		if($num < 1)
-		{
-			return false;
-		}
+	// 	if($num < 1)
+	// 	{
+	// 		return false;
+	// 	}
 
-		$row = $query->row();
+	// 	$row = $query->row();
 
-		$array = json_decode(json_encode($row), True);
+	// 	$array = json_decode(json_encode($row), True);
 
-		return $array;
-	}
+	// 	return $array;
+	// }
 
     function insert($data, $insert_id = false)
     {

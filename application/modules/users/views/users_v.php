@@ -1,9 +1,3 @@
-<?php
-// echo '<pre>';
-// print_r($row);
-// echo '</pre>';
-?>
-
 <div class="form-group">
   <label for="user_fullname" class="col-sm-2 control-label">Nama Lengkap</label>
 

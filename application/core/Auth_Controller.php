@@ -188,8 +188,10 @@ class Auth_Controller extends MY_Controller
 
 		$this->data['c_edit'] = false;
 
+		$key 	= $this->{$this->model}->getKey();
 		$id 	= $this->uri->segment(3);
-		$row 	= $this->{$this->model}->getRowById($id);
+		$where 	= array($key => $id);
+		$row 	= $this->{$this->model}->get_where($where)->row_array();
 
 		$this->data['content_view'] = 'inc_detail_v';
 		$this->data['form_action'] 	= '';
@@ -211,16 +213,17 @@ class Auth_Controller extends MY_Controller
 			die(info('has_no_access'));
 		}
 
+		$key 	= $this->{$this->model}->getKey();
 		$id 	= $this->uri->segment(3);
+		$where 	= array($key => $id);
+		$row 	= $this->{$this->model}->get_where($where)->row_array();
+		
 
 		$this->data['content_view'] = 'inc_data_v';
 		$this->data['form_action'] 	= $this->ctl.'/update/'.$id;
 		$this->data['form_data'] 	= $this->ctl.'/'.$this->ctl.'_v';
 		$this->data['description'] 	= 'Form ';
-
-		$row 	= $this->{$this->model}->getRowById($id);
-
-		$this->data['row'] = $row;
+		$this->data['row'] 	= 
 
 		$this->template->admin_template($this->data);
 	}

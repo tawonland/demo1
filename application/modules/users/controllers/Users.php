@@ -93,8 +93,8 @@ class Users extends Auth_Controller
         $this->load->model('users/m_users');
 
         //
-        $data['user_password']  = password_hash('admin', PASSWORD_BCRYPT);
-        $data['user_name']		= $data['user_email'];
+        $data['user_password']  	= password_hash('admin', PASSWORD_BCRYPT);
+        $data['user_name']			= $data['user_email'];
         $data['user_fullname']		= $data['user_fullname'];
 
         //insert data

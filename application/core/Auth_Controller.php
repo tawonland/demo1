@@ -52,7 +52,27 @@ class Auth_Controller extends MY_Controller
 		$this->data['description'] = 'Data ' . $this->ctl;
 		$this->data['buttons']['add'] 	= $this->buttons->add($this->ctl);
 
-		$a_data = $this->a_data();
+		$page = 'index/';
+		$total_rows = $this->{$this->model}->getCount();
+
+		$a_data = array();
+		
+		if($this->method == 'search')
+		{
+			// get search string
+        	$search = ($this->input->post("search"))? $this->input->post("search") : "NIL";
+        	$search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
+
+			$page = 'search/';
+			$total_rows = $this->{$this->model}->getCountSearch($search);
+			
+		}
+		else
+		{
+			$a_data = $this->a_data();
+		}
+
+		
 		$no = 0;
 		foreach ($a_data as $key => $row) {
 			
@@ -117,10 +137,14 @@ class Auth_Controller extends MY_Controller
 
 		$this->data['table_generate'] = $this->table->generate();
 
+
+		// Pagination
 		$this->load->library('pagination');
 
-		$pagging['base_url'] = base_url().$this->ctl.'/index/';
-		$pagging['total_rows'] = 6;
+		
+
+		$pagging['base_url'] = base_url().$this->ctl.'/'.$page;
+		$pagging['total_rows'] = $total_rows;
 		$pagging['per_page'] = $this->{$this->model}->getLimit();
 		$pagging['uri_segment'] = $this->getOffset();
 		$pagging['use_page_numbers'] = TRUE;
@@ -200,6 +224,7 @@ class Auth_Controller extends MY_Controller
 		$this->data['id']  = $id;
 		$this->data['row'] = $row;
 
+		
 
 		$this->template->admin_template($this->data);
 	}
@@ -264,13 +289,15 @@ class Auth_Controller extends MY_Controller
 
 	function search()
 	{
-		// get search string
-        $search = ($this->input->post("search"))? $this->input->post("search") : "NIL";
+		
 
-        $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
+        $this->a_kolom[] = array('label' => array('data' => 'No', 'align' => 'center'), 'field' => 'no:');
+		$this->a_kolom[] = array('label' => 'Nama Lengkap', 'field' => 'user_fullname');
+		$this->a_kolom[] = array('label' => 'Email', 'field' => 'user_name');
+		$this->a_kolom[] = array('label' => 'No HP', 'field' => 'user_mobile');
+		$this->a_kolom[] = array('label' => array('data' => 'Aktif', 'align' => 'center'), 'td_attributes' => array('align' => 'center'), 'field' => 'user_active');
 
-        echo $search;
-        die();
+        $this->listdata();
 
 	}
 
